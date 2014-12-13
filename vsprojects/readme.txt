@@ -50,7 +50,7 @@ recommended that you use static linkage only.  However, it is possible to
 build libprotobuf and libprotoc as DLLs if you really want.  To do this,
 do the following:
 
-  1) Pass an additional flag "-DBUILD_SHARED_LIBS=ON" when invoking cmake:
+  1) Add an additional flag "-DBUILD_SHARED_LIBS=ON" when invoking cmake:
        > cmake -G "Visual Studio 9 2008" -DBUILD_SHARED_LIBS=ON ..
   2) Follow the same steps as described in the above section.
   3) When compiling your project, make sure to #define PROTOBUF_USE_DLLS.
@@ -71,7 +71,7 @@ ZLib support
 ============
 
 If you want to include GzipInputStream and GzipOutputStream
-(google/protobuf/io/gzip_stream.h) in libprotoc, you will need to do a few
+(google/protobuf/io/gzip_stream.h) in libprotobuf, you will need to do a few
 additional steps:
 
 1) Obtain a copy of the zlib library.  The pre-compiled DLL at zlib.net works.
@@ -80,17 +80,11 @@ additional steps:
    vsproject directory to compile libprotobuf, but they need to be visible to
    your own project as well, so you should probably just put them into the
    VC shared icnlude and library directories.
-3) Right-click on the "tests" project and choose "properties".  Navigate the
-   sidebar to "Configuration Properties" -> "Linker" -> "Input".
-4) Under "Additional Dependencies", add the name of the zlib .lib file (e.g.
-   zdll.lib).  Make sure to update both the Debug and Release configurations.
-5) If you are compiling libprotobuf and libprotoc as DLLs (see previous
-   section), repeat steps 2 and 3 for the libprotobuf and libprotoc projects.
-   If you are compiling them as static libraries, then you will need to link
-   against the zlib library directly from your own app.
-6) Edit config.h (in the vsprojects directory) and un-comment the line that
-   #defines HAVE_ZLIB.  (Or, alternatively, define this macro via the project
-   settings.)
+3) Add flag "-DZLIB=ON" when invoking cmake:
+     > cmake -G "Visual Studio 9 2008" -DZLIB=ON ..
+   If it reports NOTFOUND for zlib_include or zlib_lib, you might haven't put
+   the headers or the .lib file in the right directory.
+4) Open the generated protobuf.sln file and build as usual.
 
 Notes on Compiler Warnings
 ==========================
