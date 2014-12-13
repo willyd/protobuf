@@ -1,7 +1,6 @@
-This directory contains project files for compiling Protocol Buffers using
-MSVC.  This is not the recommended way to do Protocol Buffer development --
-we prefer to develop under a Unix-like environment -- but it may be more
-accessible to those who primarily work with MSVC.
+This directory contains cmake files that can be used to generate MSVC project
+files in order to build protobuf on windows. You need to have cmake installed
+on your computer before proceeding.
 
 Compiling and Installing
 ========================
@@ -13,11 +12,20 @@ Compiling and Installing
    contains gtest already and copying the gest directory from there to your
    protobuf directory:
        https://github.com/google/protobuf/releases
-1) Open protobuf.sln in Microsoft Visual Studio.
-2) Choose "Debug" or "Release" configuration as desired.*
-3) From the Build menu, choose "Build Solution".  Wait for compiling to finish.
-4) From a command shell, run tests.exe and lite-test.exe and check that all
-   tests pass.
+1) Use cmake to generate MSVC project files. Running the following commands
+   in a command shell will generate project files for Visual Studio 2008 in
+   a sub-directory named "build".
+     > cd path/to/protobuf/vsprojects
+     > mkdir build
+     > cd build
+     > cmake -G "Visual Studio 9 2008" ..
+2) Open the generated protobuf.sln file in Microsoft Visual Studio.
+3) Choose "Debug" or "Release" configuration as desired.*
+4) From the Build menu, choose "Build Solution".  Wait for compiling to finish.
+5) From a command shell, run tests.exe and lite-test.exe and check that all
+   tests pass. Make sure you have changed the working directory to the output
+   directory because tests.exe will try to find and run test_plugin.exe
+   in the working directory.
 5) Run extract_includes.bat to copy all the public headers into a separate
    "include" directory (under the top-level package directory).
 6) Copy the contents of the include directory to wherever you want to put
@@ -42,14 +50,9 @@ recommended that you use static linkage only.  However, it is possible to
 build libprotobuf and libprotoc as DLLs if you really want.  To do this,
 do the following:
 
-  1) Open protobuf.sln in MSVC.
-  2) For each of the projects libprotobuf, libprotobuf-lite, and libprotoc, do
-     the following:
-    2a) Right-click the project and choose "properties".
-    2b) From the side bar, choose "General", under "Configuration Properties".
-    2c) Change the "Configuration Type" to "Dynamic Library (.dll)".
-    2d) From the side bar, choose "Preprocessor", under "C/C++".
-    2e) Add PROTOBUF_USE_DLLS to the list of preprocessor defines.
+  1) Pass an additional flag "-DBUILD_SHARED_LIBS=ON" when invoking cmake:
+       > cmake -G "Visual Studio 9 2008" -DBUILD_SHARED_LIBS=ON ..
+  2) Follow the same steps as described in the above section.
   3) When compiling your project, make sure to #define PROTOBUF_USE_DLLS.
 
 When distributing your software to end users, we strongly recommend that you
