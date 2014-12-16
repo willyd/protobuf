@@ -28,5 +28,6 @@ set(libprotobuf_files
 )
 
 add_library(libprotobuf ${libprotobuf_lite_files} ${libprotobuf_files})
+target_link_libraries(libprotobuf ${CMAKE_THREAD_LIBS_INIT} ${ZLIB_LIBRARIES})
 set_target_properties(libprotobuf PROPERTIES
     COMPILE_DEFINITIONS LIBPROTOBUF_EXPORTS)

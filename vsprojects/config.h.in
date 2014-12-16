@@ -1,5 +1,5 @@
-/* protobuf config.h for MSVC.  On other platforms, this is generated
- * automatically by autoheader / autoconf / configure. */
+#ifdef _MSC_VER
+/* protobuf config.h for MSVC. */
 
 /* the location of <hash_map> */
 #define HASH_MAP_H <hash_map>
@@ -24,6 +24,7 @@
 /* define if the compiler has hash_set */
 #define HAVE_HASH_SET 1
 
-/* define if you want to use zlib.  See readme.txt for additional
- * requirements. */
+#endif
+
+#define HAVE_PTHREAD ${HAVE_PTHREAD}
 #define HAVE_ZLIB ${HAVE_ZLIB}
