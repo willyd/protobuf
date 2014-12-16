@@ -3,12 +3,13 @@ add_library(gtest_main STATIC ${protobuf_source_dir}/gtest/src/gtest_main.cc)
 target_link_libraries(gtest_main gtest)
 
 set(lite_test_protos
-  google/protobuf/unittest_lite.proto
   google/protobuf/unittest_import_lite.proto
   google/protobuf/unittest_import_public_lite.proto
+  google/protobuf/unittest_lite.proto
 )
 
 set(tests_protos
+  google/protobuf/compiler/cpp/cpp_test_bad_identifiers.proto
   google/protobuf/map_lite_unittest.proto
   google/protobuf/map_proto2_unittest.proto
   google/protobuf/map_unittest.proto
@@ -22,14 +23,13 @@ set(tests_protos
   google/protobuf/unittest_import_public.proto
   google/protobuf/unittest_lite_imports_nonlite.proto
   google/protobuf/unittest_mset.proto
-  google/protobuf/unittest_no_arena_import.proto
   google/protobuf/unittest_no_arena.proto
+  google/protobuf/unittest_no_arena_import.proto
   google/protobuf/unittest_no_field_presence.proto
   google/protobuf/unittest_no_generic_services.proto
   google/protobuf/unittest_optimize_for.proto
   google/protobuf/unittest_preserve_unknown_enum.proto
   google/protobuf/unittest_proto3_arena.proto
-  google/protobuf/compiler/cpp/cpp_test_bad_identifiers.proto
 )
 
 macro(compile_proto_file filename)
@@ -63,26 +63,33 @@ endforeach(proto_file)
 set(common_test_files
   ${protobuf_source_dir}/src/google/protobuf/map_test_util.cc
   ${protobuf_source_dir}/src/google/protobuf/test_util.cc
-  ${protobuf_source_dir}/src/google/protobuf/testing/googletest.cc
   ${protobuf_source_dir}/src/google/protobuf/testing/file.cc
+  ${protobuf_source_dir}/src/google/protobuf/testing/googletest.cc
 )
 
 set(tests_files
-  ${protobuf_source_dir}/src/google/protobuf/stubs/common_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/stubs/once_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/stubs/strutil_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/stubs/structurally_valid_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/stubs/stringprintf_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/stubs/template_util_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/stubs/type_traits_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/arenastring_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/arena_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/arenastring_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/command_line_interface_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/cpp/cpp_bootstrap_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/cpp/cpp_plugin_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/cpp/cpp_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/importer_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/java/java_doc_comment_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/java/java_plugin_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/mock_code_generator.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/parser_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/compiler/python/python_plugin_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/descriptor_database_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/descriptor_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/drop_unknown_fields_test.cc
   ${protobuf_source_dir}/src/google/protobuf/dynamic_message_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/extension_set_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/generated_message_reflection_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/coded_stream_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/printer_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/tokenizer_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/io/zero_copy_stream_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/map_field_test.cc
   ${protobuf_source_dir}/src/google/protobuf/map_test.cc
   ${protobuf_source_dir}/src/google/protobuf/message_unittest.cc
@@ -92,25 +99,16 @@ set(tests_files
   ${protobuf_source_dir}/src/google/protobuf/reflection_ops_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/repeated_field_reflection_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/repeated_field_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/common_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/once_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/stringprintf_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/structurally_valid_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/strutil_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/template_util_unittest.cc
+  ${protobuf_source_dir}/src/google/protobuf/stubs/type_traits_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/text_format_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/unknown_field_set_unittest.cc
   ${protobuf_source_dir}/src/google/protobuf/wire_format_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/io/coded_stream_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/io/printer_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/io/tokenizer_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/io/zero_copy_stream_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/command_line_interface_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/importer_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/mock_code_generator.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/mock_code_generator.h
-  ${protobuf_source_dir}/src/google/protobuf/compiler/parser_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/cpp/cpp_bootstrap_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/cpp/cpp_unittest.h
-  ${protobuf_source_dir}/src/google/protobuf/compiler/cpp/cpp_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/cpp/cpp_plugin_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/java/java_plugin_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/java/java_doc_comment_unittest.cc
-  ${protobuf_source_dir}/src/google/protobuf/compiler/python/python_plugin_unittest.cc
 )
 
 add_executable(tests ${tests_files} ${common_test_files} ${tests_proto_files} ${lite_test_proto_files})
