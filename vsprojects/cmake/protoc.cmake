@@ -4,3 +4,8 @@ set(protoc_files
 
 add_executable(protoc ${protoc_files})
 target_link_libraries(protoc libprotobuf libprotoc)
+
+set(_target_name protoc)
+foreach(_config Debug Release)
+    install(TARGETS ${_target_name} DESTINATION vsprojects/${_config} CONFIGURATIONS ${_config})
+endforeach()

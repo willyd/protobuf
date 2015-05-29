@@ -28,3 +28,8 @@ add_library(libprotobuf ${libprotobuf_lite_files} ${libprotobuf_files})
 target_link_libraries(libprotobuf ${CMAKE_THREAD_LIBS_INIT} ${ZLIB_LIBRARIES})
 set_target_properties(libprotobuf PROPERTIES
     COMPILE_DEFINITIONS LIBPROTOBUF_EXPORTS)
+
+set(_target_name libprotobuf)
+foreach(_config Debug Release)
+    install(TARGETS ${_target_name} DESTINATION vsprojects/${_config} CONFIGURATIONS ${_config})
+endforeach()

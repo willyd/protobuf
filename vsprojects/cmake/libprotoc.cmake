@@ -55,3 +55,8 @@ add_library(libprotoc ${libprotoc_files})
 target_link_libraries(libprotoc libprotobuf)
 set_target_properties(libprotoc PROPERTIES
     COMPILE_DEFINITIONS LIBPROTOC_EXPORTS)
+
+set(_target_name libprotoc)
+foreach(_config Debug Release)
+    install(TARGETS ${_target_name} DESTINATION vsprojects/${_config} CONFIGURATIONS ${_config})
+endforeach()

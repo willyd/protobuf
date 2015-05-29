@@ -54,3 +54,5 @@ include(cmake/libprotobuf.cmake)
 include(cmake/libprotoc.cmake)
 include(cmake/protoc.cmake)
 include(cmake/tests.cmake)
+
+install(DIRECTORY ${protobuf_source_dir}/src/google DESTINATION src/)
